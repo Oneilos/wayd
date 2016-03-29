@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "fr.limo-vtc.dev"
+        versionCode = "10" 
+        version     = "1.0.0" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>WAY-D</name>
+
+    <description>
+        Application connectee aux serveurs WAY-D. 
+    </description>
+
+    <author href="https://www.limo-vtc.fr" email="support@limovtc.fr">
+        Support
+    </author>
+    
+    <preference name="phonegap-version" value="3.7.0" />
+    <preference name="orientation" value="portrait" />
+    <preference name="fullscreen" value="true" />
+    <icon src="images/apple-touch-icon-114x114-precomposed.png" />
+    
+    <gap:platform name="android" />
+    
+    <gap:url-scheme name="com.acme.myscheme" role="None">
+      <scheme>pgbr</scheme>
+      <scheme>pgbw</scheme>
+    </gap:url-scheme>
+    
+    <gap:plugin name="com.phonegap.plugins.pushplugin" version="2.1.1" />
+    
+    <access origin="*" />
+</widget>
