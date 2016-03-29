@@ -1,0 +1,30 @@
+.ui-autocomplete.ui-menu.ui-widget.ui-widget-content.ui-corner-all {
+background-color:#D0D0D0;
+font:1em Signika;
+width:50%;
+}
+.ui-autocomplete li {
+    margin-left:0;
+    background-color:#FFF;
+    list-style:none;
+    padding:0.5em;
+    margin:0.5em;
+}
+
+.ui-dialog.ui-widget.ui-widget-content {
+    background-color:#262d40;
+    color:#FFF;
+    font:1.5em Signika;
+    padding:2em;
+}
+
+.ui-dialog-titlebar-close {
+    display:none;
+}
+
+.ui-button.ui-widget {
+    width:100%;
+    padding:10px;
+     font:1.5em Signika;
+     margin-top:1em;
+}

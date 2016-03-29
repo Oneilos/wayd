@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie10 lt-ie9 lt-ie8 lt-ie7 FR" lang="FR"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie10 lt-ie9 lt-ie8 FR" lang="FR"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie10 lt-ie9 FR" lang="FR"> <![endif]-->
+<!--[if IE 9]>         <html class="no-js lt-ie10 FR" lang="FR"> <![endif]-->
+<!--[if gt IE 9]><!--> <html class="no-js FR" lang="FR" manifest="manifest"> <!--<![endif]-->
+    <head>
+                <meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" >
+        <title>WAY-D v1.0</title> 
+        
+        <!--[if gte IE 9]> <style type="text/css" media="screen">
+.gradient{filter:none;}
+</style><![endif]-->
+    
+    <!--[if lte IE 8]> <script type="text/javascript" src="/jquery/html5shiv.js"></script><![endif]-->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114x114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"   href="images/apple-touch-icon-72x72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"                  href="images/apple-touch-icon-precomposed.png">
+<link rel="shortcut icon" type="image/x-icon"             href="favicon.ico" />
+<link rel="shortcut icon" type="image/png"                href="favicon.png" />
+
+<link href="css/wayd.css" media="screen" rel="stylesheet" type="text/css" >
+<link href="css/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" >
+<script type="text/javascript" src="jquery/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui-1.8.24.min.js"></script>
+<script type="text/javascript" src="jquery/jquery.mobile.custom.min.js"></script>
+<script type="text/javascript" src="jquery/mustache.min.js"></script>
+<script type="text/javascript" src="jquery/jsrsasign-latest-all-min.js"></script>
+<script type="text/javascript" src="js/jaf.kernel.js"></script>
+<script type="text/javascript" src="js/jaf.cm.js"></script>
+<script type="text/javascript" src="js/jaf.eve.js"></script>
+<script type="text/javascript" src="js/jaf.tm.js"></script>
+<script type="text/javascript" src="js/jaf.maps.js"></script>
+<script type="text/javascript" src="js/lib/gds.js"></script>
+<script type="text/javascript" src="js/lib/select.js"></script>
+<script type="text/javascript" src="js/lib/concept.js"></script>
+<script type="text/javascript" src="js/lib/controller.js"></script>
+<script type="text/javascript" src="js/jfo.js"></script>
+<script type="text/javascript" src="js/dictionnaire.js"></script>
+<script type="text/javascript" src="js/wayd.js"></script>
+<script>
+    
+    //depend du limo
+    var currencySymbol   = '€';
+    // depend du chauffeur
+    var LAN_CODE_DEFAULT = 'EN';
+    var metricLocale     = 'km';
+    var formatHeure      = 'militaire';
+    var formatDate       = 'francais';
+    var num = 0;
+    Mobi.baseUrl = 'http://dev.limo-vtc.fr/'; 
+    Mobi.version = '11:07:00';
+</script>
+</head>
+<body id="conteneur">
+    <div id="init">
+        <img src="images/apple-touch-icon-114x114-precomposed.png">
+        <div class="titre">WAY-D</div>
+    </div>
+    
+    <div id="popups">
+
+        <div id="login" class="popup">
+            <div class="formulaire">
+                <div class="row">
+                    <label>%DIC_LOGIN% : </label>
+                    <input type="email" name="login" id="connexion_login" value="">
+                </div>
+                <div class="row">
+                    <label>%DIC_MOT_DE_PASSE% : </label>
+                    <input type="password" name="mdp" id="connexion_mdp" value="">
+                </div>
+                <div class="row">
+                    <label>%DIC_LANGAGE% : </label>
+                    <select name="LAN_CODE" id="LAN_CODE">
+                        <option value="FR" selected="selected">Français</option>
+                        <option value="EN">English</option>
+                    </select>
+                </div>
+                <div class="row_bt">
+                    <div class="submit" id="bt_login">%DIC_CONNEXION%</div> 
+                </div> 
+                <div id="mdp_oublier">Mot de passe oublié ?</div>
+                <div id="nouveau_compte">Créer votre compte</div>
+            </div>
+        </div>
+
+        <div id="recherche" class="popup">
+            <div class="formulaire">
+                <div class="row">
+                    <label>%DIC_DATE_DEBUT% : </label>
+                    <input type="date" name="date_debut" value="">
+                </div>
+
+                <div class="row">
+                    <label>%DIC_DATE_FIN% : </label>
+                    <input type="date" name="date_fin" value="">
+                </div>
+
+                <div class="row">
+                    <label>%DIC_N_DOSSIER% : </label>
+                    <input type="text" name="com_id" value="">
+                </div>
+
+                <div class="row">
+                    <label>%DIC_RECHERCHE% : </label>
+                    <input type="text" name="recherche" value="" placeholder="%DIC_CLIENTS_AUTRES%">
+                </div>
+                
+                <div class="row_bt">
+                    <div class="submit" id="bt_recherche">%DIC_RECHERCHER%</div> 
+                </div> 
+
+                <div class="row_bt">
+                    <div class="submit" id="bt_raz">%DIC_RAZ%</div> 
+                </div> 
+            </div> 
+        </div>
+	    
+        <div id="menu" class="popup">
+            <a href="#" onclick="javascript:Mobi.changePage('home'); return false;">
+				<span class="icone">á</span><span class="libelle">Accueil</span>
+			</a>
+            <a href="#" onclick="javascript:Mobi.ouvreCompte(); return false;">
+				<span class="icone">ù</span><span class="libelle">Mon profil</span>
+			</a>
+			<div class="hr"></div>
+            <a href="#" onclick="javascript:Mobi.changePage('P_Gen_Mission','lAction'); return false;">
+				<span class="icone">¾</span><span class="libelle">Liste des missions</span>
+			</a>
+            <a href="#" onclick="javascript:Mobi.ouvreAgenda(); return false;">
+				<span class="icone">©</span><span class="libelle">Agenda Jour</span>
+			</a>
+			<div class="hr"></div>
+            <a href="#" onclick="javascript:Mobi.ouvreGeoloc(); return false;">
+				<span class="icone">3</span><span class="libelle">Géolocalisation</span>
+			</a>
+            <a href="#" onclick="javascript:Mobi.changePage('code_rattachement'); return false;">
+				<span class="icone">à</span><span class="libelle">Code WAY-D</span>
+			</a>
+            <a href="#" onclick="javascript:Mobi.changePage('faq'); return false;">
+				<span class="icone">ë</span><span class="libelle">FAQ / %DIC_MODE_DEPANNAGE%</span>
+			</a> 
+			<div class="hr"></div>
+            <a href="#" onclick="javascript:Mobi.deconnexion(); return false;">
+				<span class="icone">n</span><span class="libelle">%DIC_DECONNEXION%</span>
+			</a>
+        </div>
+
+    </div>
+
+    <div id="content">
+        <div id="header"> 
+            <div class="icone btn retour">.</div>
+            <div class="icone btn menu">¿</div>
+            <div class="JafEveSynchro"><span class="way">WAY</span>D</div>
+			<div class="icone btn recherche">b</div>
+        </div> 
+        
+        <div id="home" class="page lAction">
+            
+            <div class="zoneBouton">
+ 
+                <div class="cel infoLieu">
+                    <div class="zoneDate"    data-role="zoneDate"></div>
+                    <div class="zoneAdresse" data-role="lieu">
+						<div class="nomLimo" data-role="limo"></div>
+					</div>
+                </div>
+
+                <div class="Boutons clearAfter">
+					<div class="grosBouton">
+						<div class="intGrosBouton">
+							<div class="Btn">
+								<div class="icone" data-role="iconeBouton"></div>
+								<div class="label" data-role="titreBouton"></div>
+							</div>
+						</div>
+					</div>
+					<div class="petitBouton attestation">
+						<div class="intPetitBouton" data-role="boutonGauche"></div>
+					</div>
+					<div class="petitBouton noshow">
+						<div class="intPetitBouton"  data-role="boutonDroit"></div>
+					</div>
+					<div class="moyenBouton reglement">
+						<div class="intMoyenBouton" data-role="reglement"></div>
+					</div>
+                </div>
+                <div class="zonePassager"></div>
+
+            </div>
+            
+            <div class="boutonBas"> 
+                <div class="lien confirmer">
+                    <div class="chiffre" data-role="confirmer"></div>
+					<div class="icone">ô</div>
+                    <!--<div class="label">%DIC_A_CONFIRMER%</div>-->
+                </div>
+                <div class="lien modifier">
+					<div class="icone">¢</div>
+                    <div class="chiffre" data-role="modifier"></div>
+                    <!--<div class="label">%DIC_MODIFIEES%</div>-->
+                </div>
+                <div class="lien cloturer">
+					<div class="icone">h</div>
+                    <div class="chiffre" data-role="cloturer"></div>
+                    <!--<div class="label">%DIC_A_FERMER%</div>-->
+                </div>
+            </div>
+
+        </div>
+        
+        <div id="fiche"        class="page fAction"></div>
+
+        <div id="frais"        class="page fAction"></div>
+
+        <div id="kmEtHeure"    class="page fAction"></div>
+
+        <div id="recipice"     class="page fAction"></div>
+
+        <div id="reglement"    class="page fAction"></div>
+        
+        <div id="geolocalisation" class="page lAction"></div>
+        
+        <div id="liste"    class="page lAction">
+            <div id="listeContent"></div>
+        </div>
+
+        <div id="agenda"    class="page agendaAction largeurEcran">
+            <div id="zoneAgenda">
+                <div id="zoneHaut" class="largeurEcran"></div>
+                <div class="separateur_zone_haut"></div>
+            </div>
+        </div>
+        
+        <div id="message" class="formulaire">
+            <div class="row_are">
+                <label>%DIC_LOG%</label>
+                <textarea name="message"></textarea>
+            </div>
+            <div class="row_bt">
+                <div class="submit razBt">%DIC_RAZ%</div> 
+            </div>
+            <div class="row_bt">
+                <div class="submit debugBt">%DIC_LANCER_DEBUG%</div> 
+            </div>
+        </div> 
+        
+        <div id="compte"   class="page compte">
+            
+            <div class="btn_onglet onglet1" data-role="obligatoire">Votre compte</div>
+            <div class="btn_onglet onglet2" data-role="complementaire">Informations complémentaires</div>
+            <div class="clear"></div>
+            <form id="form_compte">
+                <div class="onglet" data-role="obligatoire">
+                    
+                    <div class="row" id="row_CHU_EMAIL">
+                        <label for="CHU_EMAIL" class="optional">email (votre login):</label>
+                        <input type="email" name="CHU_EMAIL" id="CHU_EMAIL"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_MDP">
+                        <label for="CHU_MDP" class="optional">Mot de passe :</label>
+                        <input type="password" name="CHU_MDP" id="CHU_MDP" value="">
+                    </div>
+
+                    <div class="row" id="row_CHU_MDP_CONFIRM">
+                        <label for="CHU_MDP" class="optional">Confirmation du mot de passe :</label>
+                        <input type="password" name="CHU_MDP_CONFIRM" id="CHU_MDP_CONFIRM" value="" >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_LAN_ID">
+                        <label for="CHU_LAN_ID" class="optional">langue :</label>
+                        <select name="CHU_LAN_ID" id="CHU_LAN_ID">
+                            <option value=""></option>
+                            <option value="1">Français</option>
+                            <option value="2">English</option>
+                        </select>
+                   </div>
+                   <div class="row" id="row_CHU_CIV_ID">
+                        <label for="CHU_CIV_ID" class="optional">Civilité :</label>
+                        <select name="CHU_CIV_ID" id="CHU_CIV_ID"  >
+                            <option value="" selected="selected"></option>
+                            <option value="2">Madame</option>
+                            <option value="1">Mademoiselle</option>
+                            <option value="3">Monsieur</option>
+                        </select>
+                    </div>
+                    
+                    <div class="row" id="row_CHU_NOM">
+                        <label for="CHU_NOM" class="optional">nom :</label>
+                        <input type="text" name="CHU_NOM" id="CHU_NOM"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_PRENOM">
+                        <label for="CHU_PRENOM" class="optional">prenom :</label>
+                        <input type="text" name="CHU_PRENOM" id="CHU_PRENOM"     value=""  >
+                    </div>
+
+                    <div class="row" id="row_CHU_TEL_MOBILE_1">
+                        <label for="CHU_TEL_MOBILE_1" class="optional">tel mobile : </label>
+                        <input type="tel" name="CHU_TEL_MOBILE_1" id="CHU_TEL_MOBILE_1"     value="+33 " 
+                                 title="Notation internationnale +33 XXXX">
+                    </div>
+                </div>
+
+                <div class="onglet" data-role="complementaire">
+
+                    <div class="row" id="row_CHU_TEL_MOBILE_2">
+                        <label for="CHU_TEL_MOBILE_2" class="optional">tel mobile secours :</label>
+                        <input type="tel" name="CHU_TEL_MOBILE_2" id="CHU_TEL_MOBILE_2"     value="+33 "  >
+                    </div>
+                
+                    <div class="row" id="row_CHU_ADRESSE">
+                        <label for="CHU_ADRESSE" class="optional">adresse :</label>
+                        <input type="text" name="CHU_ADRESSE" id="CHU_ADRESSE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_CODE_POSTAL">
+                        <label for="CHU_CODE_POSTAL" class="optional">code postal :</label>
+                        <input type="text" name="CHU_CODE_POSTAL" id="CHU_CODE_POSTAL"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_VILLE">
+                        <label for="CHU_VILLE" class="optional">ville :</label>
+                        <input type="text" name="CHU_VILLE" id="CHU_VILLE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_DATE_NAISSANCE">
+                        <label for="CHU_DATE_NAISSANCE" class="optional">date naissance :</label>
+                        <input type="date" name="CHU_DATE_NAISSANCE" id="CHU_DATE_NAISSANCE"     value="" placeholder=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_CODE_POSTAL_NAISSANCE">
+                        <label for="CHU_CODE_POSTAL_NAISSANCE" class="optional">code postal naissance :</label>
+                        <input type="text" name="CHU_CODE_POSTAL_NAISSANCE" id="CHU_CODE_POSTAL_NAISSANCE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_VILLE_NAISSANCE">
+                        <label for="CHU_VILLE_NAISSANCE" class="optional">ville naissance :</label>
+                        <input type="text" name="CHU_VILLE_NAISSANCE" id="CHU_VILLE_NAISSANCE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_PAY_NAISSANCE">
+                        <label for="CHU_PAY_NAISSANCE" class="optional">pay naissance :</label>
+                        <input type="text" name="CHU_PAY_NAISSANCE" id="CHU_PAY_NAISSANCE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_NATIONALITE">
+                        <label for="CHU_NATIONALITE" class="optional">nationalite :</label>
+                        <input type="text" name="CHU_NATIONALITE" id="CHU_NATIONALITE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_LANGUE_PARLE">
+                        <label for="CHU_LANGUE_PARLE" class="optional">langue parle :</label>
+                        <input type="text" name="CHU_LANGUE_PARLE" id="CHU_LANGUE_PARLE"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_NUMERO_SECU">
+                        <label for="CHU_NUMERO_SECU" class="optional">numero de sécurité sociale :</label>
+                        <input type="number" name="CHU_NUMERO_SECU" id="CHU_NUMERO_SECU"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_DATE_VISITE_MEDICALE">
+                        <label for="CHU_DATE_VISITE_MEDICALE" class="optional">Date dernière visite médicale :</label>
+                        <input type="date" name="CHU_DATE_VISITE_MEDICALE" id="CHU_DATE_VISITE_MEDICALE"     value="" placeholder="" >
+                    </div>
+                    
+                    
+                    <div class="row" id="row_CHU_NUMERO_PERMIS">
+                        <label for="CHU_NUMERO_PERMIS" class="optional">numero permis :</label>
+                        <input type="text" name="CHU_NUMERO_PERMIS" id="CHU_NUMERO_PERMIS"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_DATE_PERMIS">
+                        <label for="CHU_DATE_PERMIS" class="optional">date permis :</label>
+                        <input type="date" name="CHU_DATE_PERMIS" id="CHU_DATE_PERMIS"     value="" placeholder="" >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_NUMERO_CARTE_ID">
+                        <label for="CHU_NUMERO_CARTE_ID" class="optional">numero carte id :</label>
+                        <input type="text" name="CHU_NUMERO_CARTE_ID" id="CHU_NUMERO_CARTE_ID"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_DATE_CARTE_ID">
+                        <label for="CHU_DATE_CARTE_ID" class="optional">date carte id :</label>
+                        <input type="date" name="CHU_DATE_CARTE_ID" id="CHU_DATE_CARTE_ID"     value="" placeholder=""   >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_NUMERO_CARTE_PRO">
+                        <label for="CHU_NUMERO_CARTE_PRO" class="optional">numero carte pro :</label>
+                        <input type="text" name="CHU_NUMERO_CARTE_PRO" id="CHU_NUMERO_CARTE_PRO"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_DATE_CARTE_PRO">
+                        <label for="CHU_DATE_CARTE_PRO" class="optional">date carte pro :</label>
+                        <input type="date" name="CHU_DATE_CARTE_PRO" id="CHU_DATE_CARTE_PRO"     value="" placeholder=""  ">
+                    </div>
+
+                    <div class="row" id="row_CHU_CARTE_SEJOUR">
+                        <label for="CHU_CARTE_SEJOUR" class="optional">carte sejour :</label>
+                        <input type="text" name="CHU_CARTE_SEJOUR" id="CHU_CARTE_SEJOUR"     value=""  >
+                    </div>
+                    
+                    <div class="row" id="row_CHU_DATE_CARTE_SEJOUR">
+                        <label for="CHU_DATE_CARTE_SEJOUR" class="optional">date carte sejour :</label>
+                        <input type="date" name="CHU_DATE_CARTE_SEJOUR" id="CHU_DATE_CARTE_SEJOUR"     value="" placeholder="" >
+                    </div>
+               </div>
+
+               <input type="hidden" name="CHU_ID" value="" id="CHU_ID" data-role="complementaire">
+
+                <div class="boutonBas">
+                    <div class="btn confirmer">
+                    <span class="icone">l</span>%DIC_ENREGISTRER%
+                </div>
+            </div> 
+              </form>
+        </div>
+        
+        <div id="page_rattachement"   class="page code_rattachement">  
+            <div class="row" id="row_code_rattachement">
+                <label for="code_rattachement" class="optional">Code WAY-D :</label>
+                <input type="number" name="code_rattachement" id="code_rattachement"  value="" >
+            </div>  
+                <div class="boutonBas">
+                    <div class="btn confirmer">
+                    <span class="icone">l</span>%DIC_ENREGISTRER%
+                </div>
+             </div>
+            
+        </div>   
+        
+        <div id="page_faq"   class="page faq">  
+            <a href="#" onclick="javascript:Mobi.reload(); return false;">
+				<span class="icone">-</span><span class="libelle">%DIC_RECHARGEMENT_COMPLET%</span>
+			</a>
+            <a href="#" onclick="javascript:Jfo.setLoadUpdateReadyFonctions('CTRLF5', function () { location.reload(true); });Jfo.setNoUpdateFonctions('alertNoUpdate', function () { alert('Vous êtes à jour'); });window.applicationCache.update();return false;">
+				<span class="icone">q</span><span class="libelle">%DIC_MISE_A_JOUR%</span>
+			</a>            
+            <a href="#" onclick="javascript:return Mobi.depannage();">
+				<span class="icone">ë</span><span class="libelle">%DIC_MODE_DEPANNAGE%</span>
+			</a> 
+            <a href="#" onclick="">
+				<span class="icone">À</span><span class="libelle">Signaler un problème</span>
+			</a> 
+        </div>
+        
+        <div class="clear"></div>
+    </div>
+    <div id="piedpage"></div>
+    
+    
+
+<script id="wayd_mission" type="text/x-mustache-template">
+    <div id="MIS{{MIS_ID}}" class="mission {{etat_mission}}" data-mis_id="{{MIS_ID}}" {{{couleurLMI}}}>
+		<div class="infoDate" data-date={{MIS_DATE_DEBUT}}">{{{date_debut_texte}}}</div>
+        <div class="cel infoLieu clearAfter">
+			<div class="heures">
+				<div class="depart">{{{heure_debut}}}</div>
+				<div class="arrivee">{{{heure_fin}}}</div>
+			</div>
+            <div class="adresse_depart">{{{lieu_prise_en_charge}}}</div>
+            <!--   : {{{lieu_depose}}}</div>-->
+            <div class="pax"><span class="icone">×</span><span class="nb">{{MIS_PAX}}</span></div>
+            <div class="bagage"><span class="icone">0</span><span class="nb">{{MIS_BAGAGE}}</span></div>
+        </div>
+		<div class="btn_note"><span class="icone">ù</span></div>
+        <div class="notes_globales" id="note_chauffeur{{MIS_ID}}">
+        <div class="mis_note_chauffeur">{{NOTE_CHAUFFEUR}}</div>
+        {{{infoPassager}}}
+        </div> 
+    </div>
+</script>
+
+<script id="wayd_mission_form" type="text/x-mustache-template">
+    <div id="FORM_MIS{{MIS_ID}}" class="formulaire mission" data-mis_id="{{MIS_ID}}">
+		<div class="entete">
+			{{#flagBtnHeure}}
+			<div class="lien heures">
+				<span class="icone">Û</span>
+			</div>
+			{{/flagBtnHeure}}
+			<div class="lien frais">
+				<span class="icone">ñ</span>
+			</div>
+			<div class="societe">{{{client}}}</div>
+			<div class="numero_dossier">
+				<label>Numéro :</label>
+				<div class="num">
+					<span class="dossier">{{MIS_COM_ID}}</span> -
+					<span class="numero">{{MIS_NUMERO}}</span> -
+					<span class="version">{{MIS_VERSION}}</span>
+				</div>
+			</div>
+			<div class="ref_client">%DIC_REF_CLIENT% : {{MIS_REF_MISSION_CLIENT}}</div>
+		</div>
+		<section class="sectionDetail" id="itineraire">
+			<h2>{{{date_debut_texte}}}</h2>
+			<div class="detail">
+				{{#ITINERAIRE}}
+					<div class="etape">
+						<div class="heure {{first}}">{{heure}}</div>
+						<div class="lieu">{{{lieu}}}</div>
+					</div>
+				{{/ITINERAIRE}}
+			</div>
+		</section>
+		<section class="sectionDetail" id="sectionPass">
+			<h2>%DIC_PASSAGERS% : <span class="color bold">{{MIS_PAX}}</span></h2>
+			<div class="detail"> 
+				{{#champMissionPassager}}
+					<div class="infoPassager">
+						<label>{{label}} :</label>
+						<span class="valeur">{{valeur}}</span>
+					</div>
+				{{/champMissionPassager}}
+				
+				{{{infoPassager}}}
+				
+				{{{MIS_LISTE_PASSAGERS}}} 
+			</div>
+		</section>
+		{{#NOTE_CHAUFFEUR}}
+		<section class="sectionDetail">
+			<h2>%DIC_NOTE_CHAUFFEUR% : </h2>
+			<div class="detail">{{{NOTE_CHAUFFEUR}}}</div>
+		</section>
+		{{/NOTE_CHAUFFEUR}}
+		<section class="sectionDetail ouvrePanneau" id="sectionPanneau">
+			<h2>%DIC_PANNEAU% : <span class="color bold">{{MIS_PANNEAU}}</span></h2>
+			<div class="detail">%DIC_VOIR_EN_GRAND%</div>
+		</section>
+		<section class="sectionDetail"  id="sectionAuto">
+			<h2>%DIC_VEHICULE%</h2>
+			<div class="detail">
+				<div class="sectionH">{{TVE_LIBELLE}}</div>
+				<div class="sectionH">{{VOI_LIBELLE}}</div>
+				<div class="sectionAd"></div>
+				<div class="clear"></div>
+			</div>
+		</section>
+		<section class="sectionDetail">
+			<h2>%DIC_TYPE_SERVICE% : </h2>
+			<div class="detail">{{TSE_LIBELLE}}</div>
+		</section>
+		<section class="sectionDetail">
+			<h2>%DIC_PROGRAMME% : </h2>
+			<div class="detail">{{{PROGRAMME}}}</div>
+		</section>
+
+            
+
+            <div class="clear"></div>
+
+
+            
+        </div>
+            
+        <div class="boutonBas">
+            <div class="btn confirmer">
+                <span class="icone">ô</span>%DIC_CONFIRMER%
+            </div>
+            <div class="btn cloturer">
+                <span class="icone">n</span>%DIC_FERMER%
+            </div>
+           
+        </div>
+            
+    </div>
+
+</script>
+
+<script id="wayd_mission_recepisse" type="text/x-mustache-template">
+    <div id="FORM_MIS{{MIS_ID}}" class="formulaire mission" data-mis_id="{{MIS_ID}}">
+        <div id="messageOfficiel">
+            <h1>%DIC_ATTESTATION_VTC%</h1>
+            <span id="exploitant">%DIC_N_EXPLOITANT% : {{{ECO_IMAT_REGISTRE}}}</span>
+            <span id="reglementation">%DIC_TEXTE_REGLEMENTATION%</span>
+       </div>
+
+        <section class="sectionDetail" id="sectionContact">
+            <h2>%DIC_CLIENT%</h2>
+            <div class="detail">
+                <div class="color">{{{client}}}</div>
+                <div class="sectionH">{{contact_nom}}</div>
+                <div class="sectionAd">
+                    <div class="contact_tel"><a href="tel:{{contact_tel}}">{{contact_tel}}</a></div>
+                    <div class="contact_mob"><a href="tel:{{contact_mob}}">{{contact_mob}}</a></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </section>
+        
+        <section class="sectionDetail" id="dateResa">
+            <h2>%DIC_RESA_ENREGISTREE%</h2>
+            <div class="detail">
+                %DIC_LE% {{date_dossier}} %DIC_A% {{{heure_dossier}}}
+            </div>
+        </section>
+        
+        <section class="sectionDetail">
+            <h2>%DIC_TYPE_SERVICE% : </h2>
+            <div class="detail">{{TSE_LIBELLE}}</div>
+        </section> 
+        
+        <section class="sectionDetail" id="itineraire">
+            <h2>%DIC_ITINERAIRE% : %DIC_LE% {{{date_debut}}} %DIC_DE% {{{heure_debut}}} %DIC_A% {{{heure_fin}}}</h2>
+            <div class="detail">                            
+                {{#ITINERAIRE}}
+                <div class="etape">
+                    <div class="heure {{first}}">{{heure}}</div>
+                    <div class="lieu">{{{lieu}}}</div>
+                </div>
+                {{/ITINERAIRE}}
+            </div>
+        </section>
+
+        <section class="sectionDetail"  id="sectionAuto">
+            <h2>%DIC_VEHICULE%</h2>
+            <div class="detail">
+                Type : {{TVE_LIBELLE}}<br>
+                {{VOI_LIBELLE}}
+            </div>
+        </section>
+        <section class="sectionDetail" id="sectionPass">
+            <h2>%DIC_PASSAGERS% : <span class="color bold">{{MIS_PAX}}</span></h2>
+            <div class="detail">
+                {{{infoPassager}}}
+                {{{MIS_LISTE_PASSAGERS}}}
+            </div>
+        </section>
+            
+    </div>
+
+</script>
+
+<script id="wayd_mission_frais" type="text/x-mustache-template">
+    <div id="FORM_MIS{{MIS_ID}}" class="formulaire mission" data-mis_id="{{MIS_ID}}">
+        <div class="row" id="row_MIS_REPAS_QTE">
+            <label for="MIS_REPAS_QTE" class="optional">%DIC_REPAS% :</label>
+            <select name="MIS_REPAS_QTE" id="MIS_REPAS_QTE" placeholder=""  valeurMin="0" valeurMax="2">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </div>
+
+        <div class="row" id="row_MIS_PEAGE">
+            <label for="MIS_PEAGE" class="optional">%DIC_PEAGE% :</label>
+            <input type="text" name="MIS_PEAGE" id="MIS_PEAGE"     value="{{MIS_PEAGE}}" placeholder="" >
+            <p class="description">€</p>
+        </div>
+            
+        <div class="row" id="row_MIS_DEBOURS">
+            <label for="MIS_DEBOURS" class="optional">%DIC_DEBOURS% :</label>
+            <input type="text" name="MIS_DEBOURS" id="MIS_DEBOURS"     value="{{MIS_DEBOURS}}" placeholder="" >
+            <p class="description">€</p>
+        </div>
+        
+        <div class="row" id="row_MIS_PARKING">
+            <label for="MIS_PARKING" class="optional">%DIC_PARKING% :</label>
+            <input type="text" name="MIS_PARKING" id="MIS_PARKING"     value="{{MIS_PARKING}}" placeholder="" >
+            <p class="description">€</p>
+        </div>
+        
+        <div class="row_are" id="row_MIS_COMMENTAIRE_CHAUFFEUR">
+            <label for="MIS_COMMENTAIRE_CHAUFFEUR" class="optional">%DIC_COMMENTAIRE_MISSION% :</label>
+            <textarea name="MIS_COMMENTAIRE_CHAUFFEUR" id="MIS_COMMENTAIRE_CHAUFFEUR"  rows="24" cols="80">{{{MIS_COMMENTAIRE_CHAUFFEUR}}}</textarea>
+        </div>
+          
+        <div class="boutonBas">
+            <div class="btn confirmer">
+                <span class="icone">l</span>%DIC_ENREGISTRER%
+            </div>
+        </div>    
+    </div>
+
+</script>
+
+<script id="wayd_mission_heure" type="text/x-mustache-template">
+    <div id="FORM_MIS{{MIS_ID}}" class="formulaire mission" data-mis_id="{{MIS_ID}}">
+        <div class="row" id="row_MIS_HEURE_REEL_DEBUT">
+            <label for="MIS_HEURE_REEL_DEBUT" class="optional">%DIC_H_DEBUT_MISSION% :</label>
+            <input type="time" name="MIS_HEURE_REEL_DEBUT" id="MIS_HEURE_REEL_DEBUT"     value="{{MIS_HEURE_REEL_DEBUT}}" placeholder="" class="timeHTML5" dossierFichierFiltre="" title="%DIC_EXEMPLE_HEURE%" type="time">
+            <p class="description">%DIC_HEURE%</p>
+        </div>
+        <table class="etapes">
+            <thead><tr><th>%DIC_ARRIVEE%</th><th>%DIC_DEPART%</th></tr></thead>
+        {{#etapes}}
+             <tr>
+                <td class="libelle" colspan="2">{{{libelle}}}</td>
+             </tr>
+             <tr class="champHeure">
+                <td><input type="time" name="EPR_HEURE_ARRIVER{{EPR_ID}}" value="{{EPR_HEURE_ARRIVER}}" data-epr_id="{{EPR_ID}}" data-role="EPR_HEURE_ARRIVER"></td>
+                <td><input type="time" name="EPR_HEURE_DEPART{{EPR_ID}}" value="{{EPR_HEURE_DEPART}}"   data-epr_id="{{EPR_ID}}" data-role="EPR_HEURE_DEPART"></td>
+             </tr>
+        {{/etapes}}
+        </table>
+                    
+        
+        <div class="row" id="row_MIS_HEURE_REEL_FIN">
+            <label for="MIS_HEURE_REEL_FIN" class="optional">%DIC_H_FIN_MISSION% :</label>
+            <input type="time" name="MIS_HEURE_REEL_FIN" id="MIS_HEURE_REEL_FIN"     value="{{MIS_HEURE_REEL_FIN}}" placeholder="" class="timeHTML5" dossierFichierFiltre="" title="%DIC_EXEMPLE_HEURE%" type="time">
+            <p class="description">%DIC_HEURE%</p>
+        </div>
+
+        <div class="row" id="row_MIS_KM_DEBUT">
+            <label for="MIS_KM_DEBUT" class="optional">%DIC_KM_DEBUT_MISSION% :</label>
+            <input type="text" name="MIS_KM_DEBUT" id="MIS_KM_DEBUT"     value="{{MIS_KM_DEBUT}}" placeholder="" class="timeHTML5" dossierFichierFiltre="">
+            <p class="description">%DIC_KM%</p>
+        </div>
+
+        <div class="row" id="row_MIS_KM_FIN">
+            <label for="MIS_KM_FIN" class="optional">%DIC_KM_FIN_MISSION% :</label>
+            <input type="text" name="MIS_KM_FIN" id="MIS_KM_FIN"     value="{{MIS_KM_FIN}}" placeholder="" class="timeHTML5" dossierFichierFiltre="">
+            <p class="description">%DIC_KM%</p>
+        </div>
+        
+        <div class="row_are" id="row_MIS_COMMENTAIRE_CHAUFFEUR">
+            <label for="MIS_COMMENTAIRE_CHAUFFEUR" class="optional">%DIC_COMMENTAIRE% :</label>
+            <textarea name="MIS_COMMENTAIRE_CHAUFFEUR" id="MIS_COMMENTAIRE_CHAUFFEUR"  rows="24" cols="80">{{{MIS_COMMENTAIRE_CHAUFFEUR}}}</textarea>
+        </div>
+
+          
+        <div class="boutonBas">
+            <div class="btn confirmer">
+                <span class="icone">l</span>%DIC_ENREGISTRER% 
+            </div>
+        </div>    
+    </div>
+
+</script>
+
+<script id="wayd_mission_reglement" type="text/x-mustache-template">
+    <div id="FORM_MIS{{MIS_ID}}" class="formulaire mission" data-mis_id="{{MIS_ID}}">
+         <div class="row" id="row_REL_MONTANT_REGLER">
+            <label for="REL_MONTANT_REGLER" class="optional">%DIC_MONTANT_ENCAISSE% :</label>
+            <input type="text" name="REL_MONTANT_REGLER" id="REL_MONTANT_REGLER"     value="{{montant}}" placeholder="" >
+              <p class="description">€</p>
+        </div>
+        <div class="row" id="row_REL_MRE_ID">
+            <label for="REL_MRE_ID" class="optional">%DIC_MODE_REGLEMENT% :</label>
+            <select name="REL_MRE_ID" id="REL_MRE_ID" >
+                <option value="">...</option>
+                {{#mres}}
+                    <option value="{{MRE_ID}}">{{MRE_LIBELLE}}</option>
+                {{/mres}}
+            </select>
+        </div>
+        <div class="row_are" id="row_REL_COMMENTAIRE">
+            <label for="REL_COMMENTAIRE" class="optional">%DIC_COMMENTAIRE% :</label>
+            <textarea name="REL_COMMENTAIRE" id="REL_COMMENTAIRE"  rows="24" cols="80">{{{REL_COMMENTAIRE}}}</textarea>
+        </div>
+
+          
+        <div class="boutonBas">
+            <div class="btn confirmer">
+                <span class="icone">l</span>%DIC_ENREGISTRER%
+            </div>
+        </div>    
+    </div>
+
+</script>
+
+<script id="wayd_mission_bouton_passager" type="text/x-mustache-template">
+    <div class="passager {{classe}}" data-prs_id="{{PRS_ID}}">
+        <div class="nom">{{{nom}}}</div>
+        <div class="boutons">
+            {{#boutons}}
+                <div class="btn {{classe}}" data-prs_id="{{PRS_ID}}" data-role="{{role}}">
+                    {{label}}
+                </div>
+            {{/boutons}}
+            <div class="info">{{{info}}}</div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</script>
+
+<script id="wayd_agenda_zoneHaut" type="text/x-mustache-template">
+    <table class="agenda_semaine">
+        <tbody>
+        <tr>
+        {{#JOUR}}
+            <td class="label">{{label}}</td>
+        {{/JOUR}}
+        </tr>
+        <tr>
+        {{#JOUR}}
+            <td class="nombre {{selected}}" data-date="{{date}}"><div class="rond">{{nombre}}</div></td>
+        {{/JOUR}}
+        </tr>
+        </tbody>
+    </table>
+    <div class="date largeurEcran" id="agenda_date_texte">{{date_longue}}</div>
+</script>
+        
+<script id="wayd_agenda_jour"  type="text/x-mustache-template">
+    <div class="jour largeurEcran" data-date="{{date}}">
+        <div class="fond_heure ">
+            <div class="separateur_haut"></div>
+            {{#HEURE}}<div class="heure">{{label}}</div>{{/HEURE}}
+            <div class="separateur_bas"></div>
+            <div class="clear"></div>
+        </div>
+        <div class="fond_ligne">
+            {{#HEURE}}<div class="ligne_demiheure"></div><div class="ligne_heure"></div>{{/HEURE}}<div class="ligne_demiheure"></div>
+        </div>
+        {{#MISSIONS}}
+            {{#MIS_ID}}
+                <div class="missionAgenda" data-mis_id="{{MIS_ID}}" data-database="{{database}}">
+                    <div class="fondMission largeurEcran"></div>
+                </div>
+            {{/MIS_ID}}
+            {{^MIS_ID}}
+                <div class="curseur largeurEcran"></div>
+            {{/MIS_ID}}
+        {{/MISSIONS}} 
+   </div>
+   
+   
+</script>
+
+<script id="wayd_geoloc"  type="text/x-mustache-template">
+    <div class="row clearAfter">
+        <label for="GEOLOC">Géolocalisation :</label>
+        <input type="hidden" id="GEOLOC" name="GEOLOC" value="{{GEOLOC}}">
+        <div class="flipswitch" data-champ="GEOLOC">
+            <div data-value="1" data-prochaine="0" class="flag fv1"><div class="libelle">Activée</div><div class="btn"></div></div>
+            <div data-value="0" data-prochaine="1" class="flag fv0"><div class="btn"></div><div class="libelle">Désactivée</div></div>
+        </div>
+    </div>
+    {{#LIMOS}}
+    <div class="row clearAfter">
+        <label for="LCH_FLAG_ACTIF{{INS_ID}}">{{limo}} :</label>
+        <input type="hidden" id="LCH_FLAG_ACTIF{{INS_ID}}" name="LCH{{INS_ID}}" value="{{value}}" data-limo="{{limo}}">
+        <div class="flipswitch" data-champ="LCH_FLAG_ACTIF{{INS_ID}}">
+            <div data-value="1" data-prochaine="0" class="flag fv1"><div class="libelle">Activée</div><div class="btn"></div></div>
+            <div data-value="0" data-prochaine="1" class="flag fv0"><div class="btn"></div><div class="libelle">Désactivée</div></div>
+        </div>
+    </div>
+    {{/LIMOS}}
+        <div class="boutonBas">
+            <div class="btn confirmer">
+                <span class="icone">l</span>%DIC_ENREGISTRER%
+            </div>
+        </div>    
+</script>
+
+
+
+<script>
+    Jaf.init();
+</script>
+                
+
+
+        
+            </body>
+</html>
