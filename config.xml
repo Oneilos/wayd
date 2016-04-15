@@ -10,14 +10,14 @@
     <name>WAY-D</name>
 
     <description>
-        Application connectee aux serveurs WAY-D. 
+        Application connectée aux serveurs WAY-D. 
     </description>
 
     <author href="https://www.limo-vtc.fr" email="support@limovtc.fr">
         Support
     </author>
     
-    <preference name="phonegap-version" value="3.7.0" />
+    <preference name="phonegap-version" value="5.2.0" />
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
     <icon src="images/apple-touch-icon-114x114-precomposed.png" />
