@@ -17,7 +17,7 @@
         Support
     </author>
     
-    <preference name="phonegap-version" value="5.2.0" />
+    <preference name="phonegap-version" value="cli-5.2.0" />
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
     <icon src="images/apple-touch-icon-114x114-precomposed.png" />
