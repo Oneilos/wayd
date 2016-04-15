@@ -287,8 +287,6 @@ Jaf.Gds = function( apiKey , cleSecrete ) {
         params.token     = token;
         res             += '<div class="row_are"><label>param du post</label><pre class="zoneTextarea">'+JSON.stringify(params,null,'    ')+'</div></div>';
         this.log_send = res;
-        //Jaf.log(paquet);
-        
         var trans = $.ajax({
             url  : url,
             type : 'POST',

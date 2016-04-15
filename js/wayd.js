@@ -432,7 +432,7 @@ Mobi.initAffichage = function() {
 Mobi.initApi = function() {
     Mobi.ach_id = localStorage.getItem(  Mobi.name +'_ach_id');
     if ( Mobi.ach_id === null || !(Mobi.ach_id*1 >= 10000) ) {
-        $.getJSON( Mobi.baseUrl + Mobi.name + '/create-api?callback=?' , {} , Mobi.actions.make );
+        $.getJSON( Mobi.baseUrl + Mobi.name + '/create-api' , {} , Mobi.actions.make );
     } else {
         Mobi.ach_secret_key =localStorage.getItem(  Mobi.name +'_ach_secret_key' );
         Jaf.cm.gds  = new Jaf.Gds( 'ach_id' , Mobi.ach_id , Mobi.ach_secret_key , Mobi.baseUrl );
@@ -791,7 +791,7 @@ Mobi.debuggage = function () {
             log : Jaf.zoneMessageDebug_content
         }
         var trans = $.ajax({
-            url   : Mobi.urlController+'/debuggage?callback=?',
+            url   : Mobi.urlController+'/debuggage',
             type  : 'POST',
             data  : datas,
             cache : false
@@ -1208,6 +1208,8 @@ Mobi.valoriseHomepage = function() {
             database   : database_prochaine
         });
         home.find('.petitBouton').removeClass('visible');
+        home.find('#noMission').removeClass('visible');
+
         var info   = Mobi.getInfoMissionHome(row);
         var etapes = Mobi.fonctionsCel.getEtape(row.MIS_ID);
         if (etapes.length==0) {
@@ -1226,13 +1228,18 @@ Mobi.valoriseHomepage = function() {
                     Mobi.animateBouton('#800000','>',Jaf.translate('DIC_DEMARRER'));
                     grosBouton.data('smi_id',11);
                     grosBouton.data('champ_date','MIS_HEURE_REEL_DEBUT');
+                    if ( Mobi.infoLimos[ database_prochaine ].INS_FLAG_KM_DEBUT_SERVICE == '1' ) {
+                        grosBouton.data('champ_km'  , 'MIS_KM_DEBUT');
+                    }
 
                 break;
                 case '11' : 
                     Mobi.animateBouton('#008000','?',Jaf.translate('DIC_EN_PLACE'));
                     grosBouton.data('smi_id',8);
                     grosBouton.data('num_etape' , 0);
-                    grosBouton.data('champ_km'  , 'MIS_KM_DEBUT');
+                    if ( Mobi.infoLimos[ database_prochaine ].INS_FLAG_KM_DEBUT_SERVICE != '1' ) {
+                        grosBouton.data('champ_km'  , 'MIS_KM_DEBUT');
+                    }
                     grosBouton.data('champ_date', 'EPR_HEURE_ARRIVER');
                     flag_attestation = true;
                 break;
@@ -1269,11 +1276,16 @@ Mobi.valoriseHomepage = function() {
                                     Mobi.animateBouton('#ffa000','>',Jaf.translate('DIC_DEPOSE_CLIENT'));
                                     grosBouton.data('smi_id',8);
                                     grosBouton.data('champ_date','EPR_HEURE_DEPART');
-                                    grosBouton.data('champ_km'  ,'MIS_KM_FIN');
+                                    if ( Mobi.infoLimos[ database_prochaine ].INS_FLAG_KM_DEBUT_SERVICE != '1' ) {
+                                        grosBouton.data('champ_km'  ,'MIS_KM_FIN');
+                                    }
                                 } else {
                                     Mobi.animateBouton('#008000','@',Jaf.translate('DIC_TERMINER'));
                                     grosBouton.data('smi_id',9);
                                     grosBouton.data('champ_date','MIS_HEURE_REEL_FIN');
+                                    if ( Mobi.infoLimos[ database_prochaine ].INS_FLAG_KM_DEBUT_SERVICE == '1' ) {
+                                        grosBouton.data('champ_km'  ,'MIS_KM_FIN');
+                                    }
 
                                     if ( mis_id_suivante>0) {
                                         var row  = Jaf.cm.getConcept('C_Gen_Mission').getRow(mis_id_suivante);
@@ -1418,6 +1430,7 @@ Mobi.valoriseHomepage = function() {
 
     } else {
         home.find('.zoneBouton').removeClass('visible');
+        home.find('#noMission').addClass('visible');
     }
     
     home.find('.chiffre[data-role=confirmer]').html(confirmer);
@@ -1950,16 +1963,13 @@ Mobi.ouvreGeoloc = function () {
         zoneGeoloc.find('input[type=hidden]').each(function() {
             var name=$(this).attr('name');
             if ( name.substr(0,3)=='LCH') {
-                Jaf.log('name='+name);
                 var ins_id = name.substr(3);
-                Jaf.log('ins_id='+ins_id);
                 params[ ''+ins_id] = $(this).val();
-                Jaf.log('limo='+$(this).data('limo') );
                 Mobi.infoLimos[ $(this).data('limo') ].LCH_FLAG_ACTIF = $(this).val();
             }
         });
-        Jaf.cm.gds.send('geolocalisation-conf-wayd',{ 'params' : params },function(limos) {
-            Jaf.setStorage(  'limos'        , limos.limos );
+        Jaf.cm.gds.send('geolocalisation-conf-wayd',{ 'params' : params },function(data) {
+            Jaf.setStorage(  'limos'        , data.limos );
             zoneGeoloc.find('.btn.confirmer').addClass('saveOk');
             zoneGeoloc.find('.btn.confirmer').html('<span class="icone">ô</span>'+Jaf.translate('DIC_MISSION_SAUVER'));
         });

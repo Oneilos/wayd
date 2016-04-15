@@ -243,6 +243,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 
 
 /*   ----------------- HOME ----------------------*/
+#home #noMission { margin:10%; border:0.2em solid #000; padding:5%; text-align:center; font-size:2em; display:none; }
+#home #noMission.visible { display:block; }
 #home .zoneBouton {display:none; opacity:0;}
 
 #home .zoneBouton  .cel.infoLieu {width:100%; margin-bottom:25px; font-size:0.8em; position: relative; display:table; background:#fff;}
@@ -269,7 +271,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 }
 #home .Boutons{width:72%; margin:0 auto 5%;}
 #home .grosBouton {width:65%; margin-right:5%; padding-bottom:65%; position: relative; float:left; margin-bottom:5%;}
-#home .intGrosBouton {width: 100%; height:100%; position: absolute; display: block; text-align: center; border:0.2em solid #000;}
+#home .intGrosBouton {width: 100%; height:100%; position: absolute; display: block; text-align: center; border:0.2em solid #000; cursor:pointer;}
 #home .intGrosBouton .Btn {width:100%; position:absolute; bottom:5%}
 #home .intGrosBouton .icone ,
 #home .intGrosBouton .label{text-align:left; color:#e0e0e0; line-height:95%;}
@@ -285,7 +287,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 #home .petitBouton {width:30%; padding-bottom:30%; position: relative; float:left;}
 #home .petitBouton .intPetitBouton { display:none;}
 #home .petitBouton .intPetitBouton,
-#home .moyenBouton .intMoyenBouton{width: 100%; height:100%; position: absolute; display: block; text-align: center; background:#d9d8d8; font-weight:bold;}
+#home .moyenBouton .intMoyenBouton{width: 100%; height:100%; position: absolute; display: block; text-align: center; background:#d9d8d8; font-weight:bold; cursor:pointer;}
 #home .petitBouton .intPetitBouton.icone{padding-top:15px; text-align:center; font-size:3em !important;}
 #home .petitBouton.visible,
 #home .moyenBouton.visible {display:block;}
@@ -315,7 +317,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 #home .zonePassager .passager .nom{text-align:center; font-weight:bold;}
 #home .zonePassager .passager .icone.tpmr{margin-left:10px; background-color:#000; color:#FFF; padding:3px; font-weight:normal;}
 #home .zonePassager .passager .boutons { }
-#home .zonePassager .passager .boutons .btn {width:30%; display:inline-block; padding:1%; text-align:center; border:2px solid #000;margin:2% 0;}
+#home .zonePassager .passager .boutons .btn {width:30%; display:inline-block; padding:1%; text-align:center; border:2px solid #000;margin:2% 0; cursor:pointer;}
 #home .zonePassager .passager .boutons .btn.present {background-color:#000; color:#fff; margin-right:5%;}
 #home .zonePassager .passager .boutons .btn.noshow { background-color:#fff;}
 #home .zonePassager .passager .monter {color:#008000;}
@@ -412,7 +414,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 #fiche .mission.cloture .lien.heures,
 #fiche .mission.cloture .lien.frais{display:inline-block;}
 #fiche .mission .lien.heures,
-#fiche .mission .lien.frais{display:none; width:45px; font-size:1.3em; line-height:45px; text-align:center; position:fixed; top:0; z-index:9999; color:#fff;}
+#fiche .mission .lien.frais{display:none; width:45px; font-size:1.3em; line-height:45px; text-align:center; position:fixed; top:0; z-index:9999; color:#fff; cursor:pointer;}
 #fiche .mission .lien.heures{right:0;}
 #fiche .mission .lien.frais{right:45px;}
 
@@ -439,7 +441,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 #fiche .sectionDetail .detail .passager .telephone{display:inline-block;}
 #fiche .sectionDetail .detail .passager .telephone{color:#9d3737;}
 
-#fiche .sectionDetail#sectionPanneau .detail {color:#9d3737;}
+#fiche .sectionDetail#sectionPanneau .detail {color:#9d3737; cursor:pointer;}
 
 /* ---- ATTESTATION ---- */
 #fiche .sectionDetail#itineraire h2 div{display:inline-block;}
@@ -551,13 +553,24 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#498fd1', end
 {display:block;}
 
 #nouveau_compte { cursor:pointer}
-#mdp_oublier { cursor:pointer}
+#mdp_oublier { cursor:pointer; margin-top:20px;}
+#nouveau_compte { cursor:pointer; margin-top:20px;background-color:#000; color:#FFF;     width: 100%;
+    margin-top: 1em;
+    font-size: 1.3em;
+    line-height: 40px;
+    background: #000;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;}
+
 #content.compte .btn.retour {display:block;}
 #compte {padding-top:5%;}
 #compte .btn_onglet {width:46%; height:40px; float:left; border:1px solid #000; text-align:center; margin:0 0 5% 2%; }
 #compte .btn_onglet.onglet1 {margin-right:2%; line-height:40px;}
 #compte .btn_onglet.selectionner {background-color:#000; color:#FFF;}
-#compte .onglet { display:none; }
+#compte .onglet { display:none; padding-bottom: 50px;}
 #compte .onglet.selectionner { display:block; }
 #compte .row{padding:0 2%}
 #compte label {display:block; width:100%; margin-left:0; font-size:1.05em;}

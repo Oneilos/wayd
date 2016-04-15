@@ -22,10 +22,12 @@ Jaf.Gds = function( name , apiKey , cleSecrete , url ) {
             var sJWT = KJUR.jws.JWS.sign("HS256", sHeader, sPayload, this.cleSecrete);
             
             var trans = $.ajax({
-                url      : this.urlGds+'gdsv3/'+action+'/?p='+action+'&callback=?',
-                type     : 'POST',
-                dataType : "json",
-                data     : sJWT
+                url         : this.urlGds+'gdsv3/'+action+'/?p='+action,
+                type        : 'POST', 
+                //crossDomain : true,
+                cache       : false,
+                dataType    : "json",
+                data        : sJWT
             });
             if ( mafonction      ) trans.done(function(data) { mafonction(data)});
             if ( mafonction_fail ) trans.fail(function(data) { Jaf.log('gds.send('+action+') failed'); mafonction_fail(data)}); 
